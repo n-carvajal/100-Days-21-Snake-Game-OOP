@@ -16,34 +16,26 @@ class Scoreboard(Turtle):
         Upon instantiation inherit Turtle class.
         """
         super().__init__()
+        self.score = 0
+        self.high_score = 0
 
-    def create(self, position, points, text):
+    def create(self, position, text_1, text_2):
         """
-        Creates custom scoreboard at 'position', showing 'points', and displaying 'text'.
+        Checks if 'self.score is greater than 'self.high_score', if True updates 'self.high_score'.
+        Creates custom scoreboard at 'position', displaying 'text_1', 'text_2', 'self.score' and 'self.high_score'.
         Where:
         'position' = user defined coordinate as a tuple.
-        'points' = 'score'.
-        'text' = user defined string of text to display.
+        'text_1' and 'text_2' = user defined string of text to display.
         """
+        if self.score > self.high_score:
+            self.high_score = self.score
         x, y = position
         self.clear()
         self.penup()
         self.goto(x, y)
         self.pencolor("white")
-        self.write(f"{text}: {points}", False, align="center", font=("arial", 15, "normal"))
+        self.write(f"{text_1}: {self.score}  {text_2}: {self.high_score}", False, align="center",
+                   font=("arial", 15, "normal"))
         self.hideturtle()
-
-    def game_over(self, position):
-        """
-        Creates scoreboard at 'position' displaying 'GAME OVER'.
-        """
-        x, y = position
-        self.clear()
-        self.penup()
-        self.goto(x, y)
-        self.pencolor("white")
-        self.write("GAME OVER", False, align="center", font=("arial", 25, "normal"))
-        self.hideturtle()
-
 
 
