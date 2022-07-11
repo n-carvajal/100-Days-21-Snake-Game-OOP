@@ -87,12 +87,16 @@ while game_start:
     collision_occurred = mixer.Sound("crash.wav")
 
     # Set game variables.
-    score = 0
+    scoreboard.score = 0
     number_segments = 2     # Number of segments by which to extend snake when food collision occurs.
     level_up = 5            # Number of food items after which to double the 'number_segments'.
     multiplier = 2          # Number by which to multiply 'number_segments' every 'level_up'
     sleep_delay = 0.1      # Starting sleep delay with which to start the game.
     sleep_multiplier = 0.98   # Number by which to multiply the time delay to speed up the game.
+
+    # Open 'history.txt' and read the score contents. Convert to integer and assign to 'scoreboard.high_score'.
+    with open("history.txt", mode="r") as score_history:
+        scoreboard.high_score = int(score_history.read())
 
     # Instantiate a snake and food object.
     snake = Snake()
@@ -111,7 +115,7 @@ while game_start:
     # Call spawn() method for snake and food objects. Call create() method for scoreboard object.
     snake.spawn()
     food.spawn()
-    scoreboard.create((0, 350), score, "Current Score")
+    scoreboard.create((0, 350), "Current Score", "High Score")
 
     # Time controller.
     sleep(sleep_delay)
@@ -147,19 +151,22 @@ while game_start:
         if food_collision():
             food_eaten.play()
             sleep_delay *= sleep_multiplier
-            score += 1
+            scoreboard.score += 1
             food.spawn()
             snake.extend(number_segments)
             scoreboard.clear()
-            scoreboard.create((0, 350), score, "Current Score")
-            if score % level_up == 0:
+            scoreboard.create((0, 350), "Current Score", "High Score")
+            if scoreboard.score % level_up == 0:
                 number_segments *= multiplier
 
         # Check for body collision and provide feedback.
         if body_collision():
             collision_occurred.play()
             scoreboard.clear()
-            scoreboard.create((0, 0), score, "Try not to eat yourself!\nGAME OVER\nFinal Score")
+            scoreboard.create((0, 0), "Try not to eat yourself!\nGAME OVER\nFinal Score", "\nHigh Score")
+            # Take 'scoreboard.high_score' convert to a string and write high score into 'history.txt'.
+            with open("history.txt", mode="w") as score_history:
+                score_history.write(str(scoreboard.high_score))
             game_over = True
             game_start = play_game()
             screen.resetscreen()
@@ -167,5 +174,5 @@ while game_start:
 
 # Close game_start while loop with feedback.
 scoreboard.clear()
-scoreboard.game_over((0, 0))
+scoreboard.create((0, 0), "\nGAME OVER\nFinal Score", "\nHigh Score")
 screen.exitonclick()
