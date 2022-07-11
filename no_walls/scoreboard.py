@@ -44,16 +44,3 @@ class Scoreboard(Turtle):
         self.pencolor("white")
         self.write("GAME OVER", False, align="center", font=("arial", 25, "normal"))
         self.hideturtle()
-
-    def food_eaten(self, position):
-        """
-        Creates scoreboard at 'position' displaying 'GAME OVER'.
-        """
-        x, y = position
-        self.clear()
-        self.penup()
-        self.goto(x, y)
-        self.write("NOM NOM", False, align="center", font=("arial", 30, "normal"))
-        self.hideturtle()
-
-
