@@ -151,7 +151,7 @@ while game_start:
             scoreboard.create((0, 0), "Ouch you hit a wall!\nGAME OVER\nFinal Score", "\nHigh Score")
             # Take 'scoreboard.high_score' convert to a string and write high score into 'history.txt'.
             with open("history.txt", mode="w") as score_history:
-                score_history.write(str(scoreboard.high_score))
+                score_history.write(f"{scoreboard.high_score}")
             game_over = True
             game_start = play_game()
             screen.resetscreen()
@@ -176,7 +176,7 @@ while game_start:
             scoreboard.create((0, 0), "Try not to eat yourself!\nGAME OVER\nFinal Score", "\nHigh Score")
             # Take 'scoreboard.high_score' convert to a string and write high score into 'history.txt'.
             with open("history.txt", mode="w") as score_history:
-                score_history.write(str(scoreboard.high_score))
+                score_history.write(f"{scoreboard.high_score}")
             game_over = True
             game_start = play_game()
             screen.resetscreen()
